@@ -4,6 +4,7 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 require("dotenv").config();
+const nodemailer = require('nodemailer');
 
 
 router.get(`/`, async (req, res) =>{
@@ -117,8 +118,10 @@ router.post('/register', async (req, res) => {
 
 function sendAccountToEmail(email, accountNumber) {
     const transporter = nodemailer.createTransport({
-      host: "smtp-mail.outlook.com", // Outlook SMTP server
-      port: 587, // Port for sending emails
+        //host: "smtp-mail.outlook.com", // Outlook SMTP server
+        //port: 587, // Port for sending emails
+        host: 'smtp.mail.yahoo.com',
+        port: 465, // Port for sending emails
       secure: false,
       auth: {
         user: process.env.EMAIL_USER,
