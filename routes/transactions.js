@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcryptjs');
-const Transaction = require('../models/transaction');
+//const bcrypt = require('bcryptjs');
+const { Transaction } = require('../models/tranasaction'); //Transaction = require('../models/transaction');
 const { User } = require('../models/user');
 const bitcoin = require('bitcoinjs-lib');
 const Web3 = require('web3');
@@ -23,7 +23,7 @@ const ethereumPrivateKey = ethPrivateKey;
 const ethereumRecipientAddress = ethAddress;
 
 // Deposit function to transfer money to the specified coin address and update user balance
-router.post('/deposit', async (req, res) => {
+router.post('/', async (req, res) => {
     try {
         const { accountType, amount, userId } = req.body;
 
@@ -98,38 +98,38 @@ router.post('/deposit', async (req, res) => {
     }
 });
 
-// Create a new transaction
-router.post('/', async (req, res) => {
-    try {
-        const { accountType, amount, userId } = req.body;
+// // Create a new transaction
+// router.post('/', async (req, res) => {
+//     try {
+//         const { accountType, amount, userId } = req.body;
 
-        // Validate the input
-        if (!accountType || !amount || !userId) {
-            return res.status(400).json({ success: false, message: 'Invalid request parameters' });
-        }
+//         // Validate the input
+//         if (!accountType || !amount || !userId) {
+//             return res.status(400).json({ success: false, message: 'Invalid request parameters' });
+//         }
 
-        // Perform the deposit
-        await deposit(accountType, amount, userId);
+//         // Perform the deposit
+//         await deposit(accountType, amount, userId);
 
-        // Create a new Transaction object
-        const transaction = new Transaction({
-            accountType,
-            amount,
-            userId,
-        });
+//         // Create a new Transaction object
+//         const transaction = new Transaction({
+//             accountType,
+//             amount,
+//             userId,
+//         });
 
-        // Save the transaction object to the database
-        const savedTransaction = await transaction.save();
+//         // Save the transaction object to the database
+//         const savedTransaction = await transaction.save();
 
-        if (!savedTransaction) {
-            return res.status(400).json({ success: false, message: 'Failed to create transaction' });
-        }
+//         if (!savedTransaction) {
+//             return res.status(400).json({ success: false, message: 'Failed to create transaction' });
+//         }
 
-        res.status(201).json({ success: true, message: 'Transaction and deposit successful', transaction: savedTransaction });
-    } catch (error) {
-        res.status(500).json({ success: false, error: error.message });
-    }
-});
+//         res.status(201).json({ success: true, message: 'Transaction and deposit successful', transaction: savedTransaction });
+//     } catch (error) {
+//         res.status(500).json({ success: false, error: error.message });
+//     }
+// });
 
 // Get all transactions
 router.get('/', async (req, res) => {

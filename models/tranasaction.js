@@ -1,10 +1,7 @@
 const mongoose = require("mongoose");
 
-const userSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    required: true,
-  },
+const transactionSchema = new mongoose.Schema({
+  
   accountNumber: {
     type: String,
     required: true,
@@ -24,14 +21,14 @@ const userSchema = new mongoose.Schema({
 },
 });
 
-userSchema.virtual("id").get(function () {
+transactionSchema.virtual("id").get(function () {
   return this._id.toHexString();
 });
 
-userSchema.set("toJSON", {
+transactionSchema.set("toJSON", {
   virtuals: true,
 });
 
-exports.User = mongoose.model("User", userSchema);
-exports.userSchema = userSchema;
+exports.Transaction = mongoose.model("Transaction", transactionSchema);
+exports.transactionSchema = transactionSchema;
 
